@@ -1,0 +1,37 @@
+bool duplicateParanthesis(string &str)
+{
+    // Write your code here
+    stack<char>st;
+    
+    for(auto it:str)
+    {
+        if(it==')')
+        {
+            char top=st.top();
+            st.pop();
+            
+            int cnt=0;  // inside elements
+            
+            
+            while(top!='(')
+            {
+                cnt++;
+                top=st.top();
+                st.pop();
+            }
+            
+            
+            if(cnt<1) return 1;
+            
+            
+        }
+        else
+        {
+            st.push(it);
+        }
+    }
+    
+    
+    return false;
+    
+}
