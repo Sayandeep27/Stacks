@@ -1,0 +1,53 @@
+class MyQueue {
+public:
+    stack<int> main, vice;
+    MyQueue() {
+        
+    }
+    
+    void push(int x) {
+        main.push(x);
+    }
+    
+    int pop() {
+       if(!vice.empty()){
+        int ans=vice.top();
+        vice.pop();
+        return ans; 
+       }
+        
+        else{
+	   
+        while(!main.empty()){
+          int temp=main.top();
+          vice.push(temp);
+          main.pop();
+        }
+        int ans=vice.top();
+        vice.pop();
+        return ans;
+      }
+         
+    }
+    
+    int peek() {
+          if(!vice.empty()){
+        return vice.top();
+      }
+        
+      else{
+        while(!main.empty()){
+          int temp=main.top();
+          vice.push(temp);
+          main.pop();
+        }
+        return vice.top();
+      }
+        
+    }
+    
+    bool empty() {
+         return (main.empty() && vice.empty());
+    }
+};
+
