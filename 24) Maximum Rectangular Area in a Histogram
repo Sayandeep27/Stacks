@@ -25,7 +25,7 @@ public:
              while(st.size()>0 and st.top().first>=nums[i]) st.pop();
 
              if(st.size()==0) left[i]=0;
-             else left[i]=st.top().first + 1;
+             else left[i]=st.top().second + 1;
 
              st.push({nums[i],i});
          }
