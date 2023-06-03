@@ -1,62 +1,46 @@
-class Solution
-{ 
-    
-    typedef long long ll;
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& nums) {
+         
+         int n=nums.size();
+
+         vector<int>left(n),right(n);
+
+         stack<pair<int,int>>st;
+
+         for(int i=n-1;i>=0;i--)
+         {
+             while(st.size()>0 and st.top().first>=nums[i]) st.pop();
+
+             if(st.size()==0) right[i]=n-1;
+             else right[i]=st.top().second -1;
+
+             st.push({nums[i],i});
+         }
+
+         st={};
+
+         for(int i=0;i<n;i++)
+         {
+             while(st.size()>0 and st.top().first>=nums[i]) st.pop();
+
+             if(st.size()==0) left[i]=0;
+             else left[i]=st.top().first + 1;
+
+             st.push({nums[i],i});
+         }
 
 
-    public:
-   
-    //Function to find largest rectangular area possible in a given histogram.
-    long long getMaxArea(long long arr[], int n)
-    {
-        // Your code here
-        
-            
-         ll res = 0;
-        if(n == 0)
-            return res;
-            
-        stack<ll> st;
-        
-        for(int i=0; i<n; ++i) {
-            while(!st.empty() && arr[st.top()] >= arr[i]) {
-                ll last = st.top();
-                st.pop();
-                ll curr = arr[last] * (st.empty() ? i : (i - st.top() - 1));
-                res = max(res, curr);
-            }
-            st.push(i);
-        }
-        while(!st.empty()) {
-            ll last = st.top();
-            st.pop();
-            ll curr = arr[last] * (st.empty() ? n : (n - st.top() -1));
-            res = max(res, curr);
-        }
-        return res;
-        
+         int maxi=INT_MIN;
+
+         for(int i=0;i<n;i++)
+         {
+             int lol=nums[i]*(right[i]-left[i]+1);
+
+             maxi=max(maxi,lol);
+         }
+
+
+         return maxi;
     }
 };
-
-
-//{ Driver Code Starts.
-
-int main()
- {
-    long long t;
-
-    cin>>t;
-    while(t--)
-    {
-        int n;
-        cin>>n;
-        
-        long long arr[n];
-        for(int i=0;i<n;i++)
-            cin>>arr[i];
-        Solution ob;
-        cout<<ob.getMaxArea(arr, n)<<endl;
-    
-    }
-	return 0;
-}
