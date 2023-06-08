@@ -1,0 +1,85 @@
+class Solution {
+public:
+    int largest_rectangle_in_histogram(vector<int>&nums)
+    {
+          int n=nums.size();
+
+         vector<int>left(n),right(n);
+
+         // now nearest smaller to right
+
+         stack<pair<int,int>>st;
+
+         for(int i=n-1;i>=0;i--)
+         {
+           
+            
+                while(st.size()>0 and nums[i]<=st.top().first) st.pop();
+
+                if(st.size()==0) right[i]=n-1;  // no value is smaller than this
+                else right[i]=st.top().second-1;
+
+
+                st.push({nums[i],i});
+            
+             
+         }  
+
+         
+         // now nearest smaller to left
+
+         st={};
+
+         for(int i=0;i<n;i++)
+         {
+                 while(st.size()>0 and nums[i]<=st.top().first) st.pop();
+
+                 if(st.size()==0) left[i]=0;
+                 else left[i]=st.top().second+1;
+
+                 st.push({nums[i],i});
+             
+         }
+
+
+         // now calculating the final answer
+         
+         int maxi=-1;
+
+         for(int i=0;i<n;i++)
+         {
+             int area=nums[i]*(right[i]-left[i]+1);
+             maxi=max(maxi,area);
+         }
+
+
+         return maxi;
+
+    }
+
+    int maximalRectangle(vector<vector<char>>& grid) {
+          
+          int n=grid.size();
+          int m=grid[0].size();
+
+          vector<int>height(m,0);
+
+          int maxi=-1;
+
+          for(int i=0;i<n;i++)
+          {
+              for(int j=0;j<m;j++)
+              {
+                 if(grid[i][j]=='1') height[j]++;
+                 else height[j]=0;
+              }
+
+              int area=largest_rectangle_in_histogram(height);
+
+              maxi=max(maxi,area);
+          }
+
+          return maxi;
+           
+    }
+};
