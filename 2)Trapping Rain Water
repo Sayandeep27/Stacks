@@ -1,3 +1,64 @@
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+         
+    int n = height.size(); // Size of the height array
+    int left = 0;          // Left pointer starting from the beginning of the array
+    int right = n - 1;     // Right pointer starting from the end of the array
+    int leftMax = 0;       // Maximum height encountered from the left side
+    int rightMax = 0;      // Maximum height encountered from the right side
+    int waterTrapped = 0;  // Total water trapped
+
+    // Traverse the array using two pointers
+    while (left <= right) 
+    {
+        // If the height at the left pointer is less than the height at the right pointer
+        if (height[left] < height[right]) 
+        {
+            // If the height at the left pointer is greater than or equal to leftMax
+            if (height[left] >= leftMax) 
+            {
+                // Update leftMax to the current height at the left pointer
+                leftMax = height[left];
+            } 
+            else 
+            {
+                // Calculate water trapped at the current left position
+                waterTrapped += leftMax - height[left];
+            }
+
+
+            // Move the left pointer one step to the right
+            left++;
+        } 
+        else 
+        {
+            // If the height at the right pointer is greater than or equal to rightMax
+            if (height[right] >= rightMax) 
+            {
+                // Update rightMax to the current height at the right pointer
+                rightMax = height[right];
+            } 
+            else
+            {
+                // Calculate water trapped at the current right position
+                waterTrapped += rightMax - height[right];
+            }
+
+
+            // Move the right pointer one step to the left
+            right--;
+        }
+    }
+    
+    // Return the total amount of water trapped
+    return waterTrapped;
+    }
+};
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 class Solution {
 public:
     int trap(vector<int>& height) {
