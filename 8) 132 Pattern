@@ -2,6 +2,40 @@ class Solution {
 public:
     bool find132pattern(vector<int>& nums) {
         int n=nums.size();
+
+        if(n<3) return false;  // A 132 pattern is not possible with fewer than 3 numbers
+
+        stack<int>st;  // Stack to keep track of potential nums[j] values
+
+        int numsk=INT_MIN; // Variable to keep the maximum candidate for nums[k]
+
+        // Traverse the array from the end to the beginning
+        for(int i=n-1;i>=0;i--)
+        {
+            // Check if the current element can be nums[i] in the 132 pattern
+            if(nums[i]<numsk) return true;
+
+            // Maintain the stack to find a valid nums[j] and update numsK accordingly 
+            while(!st.empty() and nums[i]>st.top())
+            {
+                numsk=st.top();
+                st.pop();
+            } 
+
+            // Push the current element to the stack
+            st.push(nums[i]);
+        }
+
+
+        return false;
+    }
+};
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums) {
+        int n=nums.size();
         stack<int>st;
         int third_element=-1e9;
 
