@@ -1,4 +1,33 @@
 vector<long long> nextLargerElement(vector<long long> arr, int n){
+         
+         vector<long long>ans(n,-1); // Initialize result array with -1
+         
+         stack<long long>st; // Stack to keep track of indices of the array elements
+
+         
+         // Traverse the array from left to right
+         
+         for(int i=0;i<n;i++)
+         {
+             // While stack is not empty and the current element is greater than the element at index stored at the top of the stack
+             while(!st.empty() and arr[i]>arr[st.top()])
+             {
+                 ans[st.top()]=arr[i]; // Update the result for the index at the top of the stack
+                 st.pop(); // Pop the stack
+             }
+             
+             
+             st.push(i); // Push current index onto the stack
+         }
+         
+         
+         return ans;
+        
+    }
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+vector<long long> nextLargerElement(vector<long long> arr, int n){
        
        stack<long long>st;
        
