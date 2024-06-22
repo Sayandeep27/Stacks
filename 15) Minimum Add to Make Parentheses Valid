@@ -1,5 +1,39 @@
 class Solution {
 public:
+    int minAddToMakeValid(string S) {
+         int balance = 0; // Tracks balance of parentheses
+    int additions = 0; // Counts the number of parentheses to be added
+
+    for (char c : S)
+    {
+        if (c == '(') 
+        {
+            balance++; // Increment balance for an open parenthesis
+        }
+        else 
+        { // c == ')'
+            balance--; // Decrement balance for a close parenthesis
+        }
+        
+        // If balance is negative, we have more ')' than '(' so far
+        if (balance == -1) 
+        {
+            additions++; // Add one more '(' to balance
+            balance++; // Reset balance to 0 as we considered the ')' balanced
+        }
+    }
+
+    // Any remaining positive balance means we have more '(' than ')' so far
+    additions += balance;
+    
+    return additions;
+    }
+};
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+public:
     int minAddToMakeValid(string s) {
         
         int n=s.size();
