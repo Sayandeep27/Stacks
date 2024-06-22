@@ -1,6 +1,37 @@
 class Solution {
 public:
     int minSwaps(string s) {
+       stack<int> st;  // Stack to track opening brackets '['
+        int count = 0;  // Counter for unbalanced closing brackets ']'
+        int n = s.size();  // Length of the input string
+        
+        // Iterate through each character in the string
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == '[')
+            {
+                st.push(s[i]);  // Push '[' onto stack for every '[' encountered
+            } 
+            else if (!st.empty())
+            {
+                st.pop();  // Pop matching '[' from stack for every ']' encountered
+            }
+            else
+            {
+                count++;  // Increase count for unmatched ']' (no matching '[')
+            }
+        }
+        
+        // Calculate minimum swaps required to balance the string
+        // Explanation: Each unbalanced ']' requires at least one swap with a '['
+        return (count + 1) / 2;  // Return half of (count + 1) to get minimum swaps
+    }
+};
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    int minSwaps(string s) {
      
         
         stack<int>st;
