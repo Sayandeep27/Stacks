@@ -1,5 +1,31 @@
 class Solution {
 public:
+    int scoreOfParentheses(string S) {
+    
+    stack<int> st; // Stack to store the scores at different levels
+    int score = 0; // Current score
+
+    for (char c : S) {
+        if (c == '(')
+        {
+            // Push the current score to the stack and reset the score
+            st.push(score);
+            score = 0;
+        } 
+        else 
+        {
+            // Pop the top score from the stack and add the maximum of 1 or 2 * score
+            score = st.top() + max(2 * score, 1);
+            st.pop();
+        }
+    }
+
+    return score;
+    }
+};
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
     int scoreOfParentheses(string s) {
       
         int count=0,ans=0;
