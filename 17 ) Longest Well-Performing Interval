@@ -1,6 +1,52 @@
 class Solution {
 public:
     int longestWPI(vector<int>& hours) {
+
+
+    unordered_map<int, int> countDiffIndex; // HashMap to store first occurrence index of each count difference
+    
+    int countDiff = 0; // Initialize count difference
+    
+    int maxLen = 0; // Initialize maximum length of well-performing interval
+
+    for (int i = 0; i < hours.size(); ++i) 
+    {
+        // Update count difference based on current element
+        countDiff += hours[i] > 8 ? 1 : -1;
+
+        // Check if current count difference is positive
+        if (countDiff > 0) 
+        {
+            // If positive, update maxLen to include current index + 1 (since index starts from 0)
+            maxLen = i + 1;
+        } 
+        else
+        {
+            // Check if countDiff - 1 has been seen before in countDiffIndex
+            if (countDiffIndex.find(countDiff - 1) != countDiffIndex.end()) 
+            {
+                // Update maxLen to the maximum of current maxLen and current index - previous index
+                maxLen = max(maxLen, i - countDiffIndex[countDiff - 1]);
+            }
+        }
+
+        // Store the first occurrence index of current count difference if not already stored
+        if (countDiffIndex.find(countDiff) == countDiffIndex.end())
+        {
+            countDiffIndex[countDiff] = i;
+        }
+    }
+
+    return maxLen;
+
+    
+    }
+};
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    int longestWPI(vector<int>& hours) {
       
         
         unordered_map<int,int>mp;
