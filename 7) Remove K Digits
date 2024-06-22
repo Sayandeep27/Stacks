@@ -1,15 +1,61 @@
 class Solution {
 public:
-    string removeKdigits(string num, int k) {
-        string ans = num;
-        for (int i = 0 ; i < k ; i++) {
-            int j;
-            for (j = 0 ; j < num.length() - 1; j++) {
-                if (ans[j] > ans[j + 1]) break;
+    string removeKdigits(string nums, int k) {
+        
+        int n=nums.size();
+
+        stack<char>st; // Stack to store the digits of the smallest number
+
+        for(int i=0;i<n;i++)
+        {
+           
+            // While the stack is not empty, the current digit is less than the top of the stack,
+            // and we still need to remove digits (k > 0), pop the stack
+            while(!st.empty() and k>0 and nums[i]<st.top())
+            {
+                st.pop();
+
+                k--;
             }
-            ans.erase(ans.begin() + j);
+
+            st.push(nums[i]);
+
         }
-        while(ans[0] == '0') ans.erase(ans.begin());
-        return ans.length() > 0 ? ans : "0";
+
+
+         // If k is still greater than 0, remove the remaining digits from the end
+        while(k>0)
+        {
+            st.pop();
+            k--;
+        }
+
+
+        string ans="";
+
+        while(!st.empty())
+        {
+            ans.push_back(st.top());
+            st.pop();
+        }
+
+        // Reverse the result to get the correct order
+        reverse(ans.begin(),ans.end());
+
+        // Remove leading zeros
+        int start=0;
+
+        while(start<ans.size() and ans[start]=='0')
+        {
+            start++;
+        }
+
+        // If the result is empty or only contains zeros, return "0"
+        if(start==ans.size()) return "0";
+ 
+        // Return the result from the first non-zero digit
+        return ans.substr(start);
+
+        return ans;
     }
 };
