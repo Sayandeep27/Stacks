@@ -1,5 +1,37 @@
 class Solution {
 public:
+    vector<int> nextGreaterElements(vector<int>& arr) {
+         
+         int n=arr.size(); 
+         vector<int>ans(n,-1); // Initialize result array with -1
+
+         stack<int>st; // Stack to keep track of indices of the array elements
+
+         // Traverse the array twice
+         for(int i=0;i<2*n;i++)
+         {
+            // Use modulo operator to wrap around the array
+            while(!st.empty() and arr[i%n]>arr[st.top()])
+            {
+                ans[st.top()]=arr[i%n];  // Update the result for the index at the top of the stack
+                st.pop();   // Pop the stack
+            }
+
+            // Only push the index of the first pass
+            if(i<n)
+            {
+                st.push(i%n);
+            }
+         }
+
+         return ans;
+
+    }
+};
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
     vector<int> nextGreaterElements(vector<int>& nums) {
         
         stack<int>st;
