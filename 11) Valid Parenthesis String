@@ -1,3 +1,45 @@
+
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int n=s.size();
+
+
+       // low to track the minimum number of open parentheses needed.
+       // high to track the maximum number of open parentheses possible.
+       
+        int low=0,high=0;
+
+        for(int i=0;i<n;i++)
+        {
+            if(s[i]=='(')  // For (, increment both low and high
+            {
+                low++;
+                high++;
+            }
+            else if(s[i]==')')   // For ), decrement both low and high
+            {
+                if(low>0) low--;
+
+                high--;
+            }
+            else  // For *, treat it as both an open and close parenthesis
+            {
+                if(low>0) low--;  // Decrement low (consider * as ')'   )
+
+                high++;   // Increment high(consider * as '('    )
+            }
+
+            // If high is negative, there are too many ')' so far
+            if(high<0) return false;
+        }
+
+        // Check if all open parentheses are matched
+        return low==0;
+    }
+};
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 class Solution {
 public:
     bool checkValidString(string s) {
