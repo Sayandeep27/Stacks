@@ -1,5 +1,41 @@
 class Solution {
 public:
+    string removeOuterParentheses(string S) {
+        
+    string result;
+    int openCount = 0; // Counter to track open parentheses
+    int closeCount = 0; // Counter to track close parentheses
+    int start = 0; // Start index of the current outermost parentheses pair
+
+    for (int i = 0; i < S.size(); ++i) 
+    {
+        if (S[i] == '(') 
+        {
+            openCount++;
+        } 
+        else  // S[i] == ')'
+        {           
+            closeCount++;
+        }
+
+        // Check if we have a complete outermost pair
+        if (openCount == closeCount)
+        {
+            // Add the substring excluding the outermost parentheses to the result
+            result += S.substr(start + 1, i - start - 1);
+            
+            // Reset start index for the next potential outermost pair
+            start = i + 1;
+        }
+    }
+
+    return result;
+    }
+};
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
     string removeOuterParentheses(string s) {
        
          string str="";
