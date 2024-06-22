@@ -1,5 +1,39 @@
 class Solution {
 public:
+    vector<int> dailyTemperatures(vector<int>& temp) {
+        int n=temp.size();
+
+        vector<int>ans(n,0); // Initialize the answer array with all 0s
+
+        stack<int>st;  // Stack to store indices of temperatures in a decreasing order
+
+
+        for(int i=0;i<n;i++)
+        {
+
+           // While the stack is not empty and the current temperature is higher than the temperature at the index stored on the top of the stack 
+           while(!st.empty() and temp[i]>temp[st.top()])
+           {
+               int previndex=st.top();
+               
+               st.pop();
+               
+               // Calculate the number of days until a warmer temperature
+               ans[previndex]=i-previndex;
+
+           }
+
+            // Push the current index onto the stack
+            st.push(i);
+        }
+
+        return ans;
+    }
+};
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
     vector<int> dailyTemperatures(vector<int>& nums) {
           
           int n=nums.size();
