@@ -1,9 +1,9 @@
 
     string infixToPostfix(string s) {
        
-       int n=s.size();
+       int n=s.size();   // Length of the input infix expression
        
-       unordered_map<char,int>mp;
+       unordered_map<char,int>mp;  // Map to store operator precedence
        
        mp['+']=1;
        mp['-']=1;
@@ -13,43 +13,49 @@
        mp['(']=-1;
        
        
-       stack<char>st;
-       string ans="";
+       stack<char>st;  // Stack to store operators temporarily
+
+       string ans="";   // Output string for the postfix expression
        
        
        for(int i=0;i<n;i++)
        {
            if((s[i]>='a' and s[i]<='z') or (s[i]>='A' and s[i]<='Z') or (s[i]>='0' and s[i]<='9'))
            {
+               // If the character is an operand (alphabet or digit), append it to the output
                ans+=s[i];
            }
            else if(s[i]=='(')
            {
+               // If the character is '(', push it onto the stack
                st.push(s[i]);
            }
            else if(s[i]==')')
            {
+                // If the character is ')', pop from the stack until '(' is encountered
                while(st.top()!='(')
                {
-                   ans+=st.top();
+                   ans+=st.top();  // Append the top of the stack to the output
                    st.pop();
                }
                
-               st.pop();
+               st.pop();  // Pop '(' from the stack (but not added to output)
            }
-           else
+           else   // If the character is an operator
            {
+               // Pop from the stack to the output until the top of the stack has lower precedence
                while(!st.empty() and mp[st.top()]>=mp[s[i]])
                {
                    ans+=st.top();
                    st.pop();
                }
                
-               st.push(s[i]);
+               st.push(s[i]);   // Push the current operator onto the stack
            }
        }
        
-       
+
+      // Pop remaining operators from the stack to the output
        while(!st.empty())
        {
            ans+=st.top();
@@ -57,7 +63,7 @@
        }
        
        
-       return ans;
+       return ans;  // Return the postfix expression
        
     
     }
