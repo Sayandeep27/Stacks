@@ -1,5 +1,42 @@
 class Solution {
 public:
+    int largestRectangleArea(vector<int>& heights) {
+        
+        int n = heights.size();
+    stack<int> st;
+    int maxArea = 0;
+    
+    // Iterate through each bar in the histogram
+    for (int i = 0; i <= n; ++i)
+    {
+        // Current height to calculate the area
+        int h = (i == n ? 0 : heights[i]);
+        
+        // If the current height is smaller than the height of the bar at index st.top()
+        while (!st.empty() && h < heights[st.top()]) 
+        {
+            // Pop the top of the stack and calculate the area
+            int height = heights[st.top()];
+
+            st.pop();
+
+            int width = st.empty() ? i : i - st.top() - 1;
+            
+            maxArea = max(maxArea, height * width);
+        }
+        
+        // Push current index onto the stack
+        st.push(i);
+    }
+    
+    return maxArea;
+
+    }
+};
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
     int largestRectangleArea(vector<int>& nums) {
          
          int n=nums.size();
