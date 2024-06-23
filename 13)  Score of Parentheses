@@ -1,26 +1,45 @@
 class Solution {
 public:
-    int scoreOfParentheses(string S) {
-    
-    stack<int> st; // Stack to store the scores at different levels
-    int score = 0; // Current score
+    int scoreOfParentheses(string s) {
+         
+         int n = s.size();  // Get the size of the input string
 
-    for (char c : S) {
-        if (c == '(')
-        {
-            // Push the current score to the stack and reset the score
-            st.push(score);
-            score = 0;
-        } 
-        else 
-        {
-            // Pop the top score from the stack and add the maximum of 1 or 2 * score
-            score = st.top() + max(2 * score, 1);
-            st.pop();
-        }
-    }
+         stack<int> st;  // Stack to store scores at each step
 
-    return score;
+         int score = 0;  // Initialize the score to 0
+
+         // Traverse through the input string
+         for (int i = 0; i < n; i++) 
+         {
+            if (s[i] == '(')
+            {
+                // Push the current score to the stack
+                st.push(score);
+
+                // Reset the score to 0 for the new inner level
+                score = 0;
+
+            } 
+            else 
+            {
+                // When encountering a ')', calculate the score
+                // st.top() is the score before the current '()' or nested '()'
+                // max(1, 2 * score) handles both '()' and nested cases:
+                // - For '()', score is 0, so max(1, 0) = 1
+                // - For nested '(A)', score is non-zero, so it is doubled
+
+                score = st.top() + max(1, 2 * score);
+
+
+                // Pop the top of the stack as it's now used
+                st.pop();
+            }
+         }
+
+
+
+         // Return the final calculated score
+         return score;
     }
 };
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
