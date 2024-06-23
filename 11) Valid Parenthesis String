@@ -43,37 +43,60 @@ public:
 class Solution {
 public:
     bool checkValidString(string s) {
-          
-          stack<int>st1;
-          stack<int>st2;
-          int n=s.size();
 
-          for(int i=0;i<n;i++)
-          {
-              if(s[i]=='(') st1.push(i);
-              else if(s[i]=='*') st2.push(i);
-              else
-              {
-                  if(st1.size()>0) st1.pop();
-                  else if(st2.size()>0) st2.pop();
-                  else return false;
-              }
-          }
+        stack<int> st1;  // Stack to store positions of '('
+        stack<int> st2;  // Stack to store positions of '*'
 
+        int n = s.size();
 
-          if(st1.size()==0) return true; // now remaining * can be treated as ""
+        // Iterate through each character in the string
+        for (int i = 0; i < n; i++) 
+        {
+            if (s[i] == '(') 
+            {
+                st1.push(i);  // Push the position of '(' onto stack st1
+            } 
+            else if (s[i] == '*') 
+            {
+                st2.push(i);  // Push the position of '*' onto stack st2
+            } 
+            else 
+            {
+                // For ')', try to balance with '(' first
+                if (!st1.empty()) 
+                {
+                    st1.pop();  // Pop a matching '('
+                } 
+                else if (!st2.empty()) 
+                {
+                    st2.pop();  // Pop a '*' if no '(' available
+                } 
+                else 
+                {
+                    return false;  // No matching '(' or '*' for ')'
+                }
+            }
+        }
 
-          while(st1.size()>0)
-          {
-              if(st2.size()==0) return false;
-              else if(st2.top()>st1.top())
-              {
-                  st2.pop();
-                  st1.pop();
-              }
-              else return false;
-          }
+        // Handle remaining '(' in the stack
+        // Remaining '*' can be treated as ')'
+        while (!st1.empty()) 
+        {
+            if (st2.empty()) 
+            {
+                return false;  // No '*' to balance remaining '('
+            } 
+            else if (st2.top() > st1.top()) 
+            {
+                st2.pop();  // Use '*' to balance '('
+                st1.pop();
+            } 
+            else 
+            {
+                return false;  // '*' cannot balance '(' at this position
+            }
+        }
 
-          return true;
+        return true;  // All '(' are balanced
     }
 };
