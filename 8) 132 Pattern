@@ -13,7 +13,7 @@ public:
         for(int i=n-1;i>=0;i--)
         {
             // Check if the current element can be nums[i] in the 132 pattern
-            if(nums[i]<numsk) return true;
+            if(nums[i]<numsk) return true;   // we have found a 132 pattern because we already have nums[k] (stored in numk) which is greater than nums[i] and some nums[j] (stored in the stack) which is greater than nums[k]. Therefore, return true
 
             // Maintain the stack to find a valid nums[j] and update numsK accordingly 
             while(!st.empty() and nums[i]>st.top())
