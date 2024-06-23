@@ -1,5 +1,48 @@
 class Solution {
 public:
+    int minAddToMakeValid(string s) {
+        
+        int n = s.size();  // Get the size of the input string
+        stack<int> st;  // Stack to store unmatched opening parentheses
+
+        int cnt = 0;  // Counter for unmatched closing parentheses
+
+        // Traverse through the input string
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == '(') 
+            {
+                // If the character is '(', push it onto the stack
+                st.push(s[i]);
+            } 
+            else 
+            {
+                // If the character is ')'
+                if (st.size() == 0) 
+                {
+                    // If the stack is empty, increment the count of unmatched ')'
+                    cnt++;
+                } 
+                else 
+                {
+                    // If the stack is not empty, pop the top of the stack
+                    // This means we found a matching '(' for the current ')'
+                    st.pop();
+                }
+            }
+        }
+
+        // Return the total count of unmatched parentheses
+        // cnt is the number of unmatched ')'
+        // st.size() is the number of unmatched '('
+        
+        return cnt + st.size();
+    }
+};
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
     int minAddToMakeValid(string S) {
          int balance = 0; // Tracks balance of parentheses
     int additions = 0; // Counts the number of parentheses to be added
@@ -30,42 +73,3 @@ public:
     }
 };
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-class Solution {
-public:
-    int minAddToMakeValid(string s) {
-
-         int n = s.size();  // Get the size of the string
-
-        stack<char> st;  // Stack to store unmatched opening parentheses '('
-
-        int cnt = 0;  // Counter for unmatched closing parentheses ')'
-
-        // Iterate through each character in the string
-        for (int i = 0; i < n; i++) 
-        {
-            if (s[i] == '(') 
-            {
-                st.push(s[i]);  // Push opening parenthesis onto the stack
-            } 
-            else 
-            {
-                if (st.size() == 0) 
-                {
-                    cnt++;  // If stack is empty and a closing parenthesis is encountered, increment count
-                } 
-                else 
-                {
-                    st.pop();  // If stack is not empty, pop the matching opening parenthesis
-                }
-            }
-        }
-
-
-
-        // The result is the sum of unmatched closing parentheses (cnt) and unmatched opening parentheses (stack size)
-        return cnt + st.size();
-      
-    }
-};
