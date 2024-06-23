@@ -1,73 +1,25 @@
-#include<bits/stdc++.h>
-using namespace std;
-
-int precedence(char ch)
+// Function to convert infix expression to prefix notation
+string infixToPrefix(string infix) 
 {
-    if(ch=='^') return 3;
-    else if(ch=='*' or ch=='/') return 2;
-    else if(ch=='+' or ch=='-') return 1;
-    else return -1;
+    // Reverse the infix expression
+    reverse(infix.begin(), infix.end());
+    
+    // Convert reversed infix to postfix
+    string postfix = infixToPostfix(infix);
+    
+    // Reverse the postfix expression to get prefix
+    reverse(postfix.begin(), postfix.end());
+    
+    return postfix;
 }
 
-string infix_to_prefix(string s)
+
+
+int main()
 {
-    reverse(s.begin(),s.end());
-    
-    stack<char>st;
-    string ans;
-    int n=s.size();
-    
-    
-    for(int i=0;i<n;i++)
-    {
-        if((s[i]>='a' and s[i]<='z') or (s[i]>='A' and s[i]<='Z'))
-        {
-            ans+=s[i];
-        }
-        else if(s[i]==')')
-        {
-            st.push(s[i]);
-        }
-        else if(s[i]=='(')
-        {
-            while(st.size()>0 and st.top()!=')')
-            {
-                ans+=st.top();
-                st.pop();
-            }
-            
-            if(st.size()!=0) st.pop();
-        }
-        else
-        {
-            while(st.size()>0 and precedence(st.top())>=precedence(s[i]))
-            {
-                ans+=st.top();
-                st.pop();
-            }
-            
-            st.push(s[i]);
-        }
-    }
-    
-    
-    while(!st.empty())
-    {
-        ans+=st.top();
-        st.pop();
-    }
-    
-    
-    reverse(ans.begin(),ans.end());
-    
-    return ans;
-    
-}
-
-int main() {
-   
-   cout<<infix_to_prefix("(a-b/c)*(a/k-l)")<<endl;
-    
-
+    string infix = "a + b * c";
+    string prefix = infixToPrefix(infix);
+    cout << "Infix: " << infix << endl;
+    cout << "Prefix: " << prefix << endl;
     return 0;
 }
