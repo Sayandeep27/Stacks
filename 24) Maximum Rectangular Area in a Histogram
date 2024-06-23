@@ -1,3 +1,79 @@
+int largestRectangleArea(vector<int>& nums) {
+        int n = nums.size();  // Length of the input array
+
+        vector<int> left(n), right(n);  // Arrays to store the left and right boundaries for each bar
+
+        stack<pair<int, int>> st;  // Stack to keep track of bars and their indices
+
+        // Find the right boundary for each bar
+        for (int i = n - 1; i >= 0; i--) 
+        {
+            // Pop elements from the stack while the current bar is smaller than or equal to the bar at the stack's top
+            while (!st.empty() && st.top().first >= nums[i]) st.pop();
+            
+            // If the stack is empty, it means the current bar can extend to the end
+            if (st.empty()) right[i] = n - 1;
+
+
+            // Otherwise, the current bar can extend up to the bar just before the one at the stack's top
+            else right[i] = st.top().second - 1;
+            
+            // Push the current bar and its index onto the stack
+            st.push({nums[i], i});
+        }
+
+
+
+
+        // Clear the stack for the next pass
+        st = {};
+
+
+
+
+        // Find the left boundary for each bar
+        for (int i = 0; i < n; i++)
+        {
+            // Pop elements from the stack while the current bar is smaller than or equal to the bar at the stack's top
+            while (!st.empty() && st.top().first >= nums[i]) st.pop();
+            
+            // If the stack is empty, it means the current bar can extend to the beginning
+            if (st.empty()) left[i] = 0;
+
+
+            // Otherwise, the current bar can extend up to the bar just after the one at the stack's top
+            else left[i] = st.top().second + 1;
+            
+            // Push the current bar and its index onto the stack
+            st.push({nums[i], i});
+        }
+
+
+
+        int maxi = INT_MIN;  // Variable to store the maximum rectangle area
+
+
+
+        // Calculate the maximum rectangle area for each bar
+        for (int i = 0; i < n; i++) 
+        {
+            // Calculate the width of the rectangle for the current bar
+            int width = right[i] - left[i] + 1;
+
+
+            // Calculate the area of the rectangle for the current bar
+            int area = nums[i] * width;
+
+
+            // Update the maximum area encountered
+            maxi = max(maxi, area);
+        }
+
+        return maxi;  // Return the maximum rectangle area
+    }
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
@@ -31,53 +107,5 @@ public:
     
     return maxArea;
 
-    }
-};
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-class Solution {
-public:
-    int largestRectangleArea(vector<int>& nums) {
-         
-         int n=nums.size();
-
-         vector<int>left(n),right(n);
-
-         stack<pair<int,int>>st;
-
-         for(int i=n-1;i>=0;i--)
-         {
-             while(st.size()>0 and st.top().first>=nums[i]) st.pop();
-
-             if(st.size()==0) right[i]=n-1;
-             else right[i]=st.top().second -1;
-
-             st.push({nums[i],i});
-         }
-
-         st={};
-
-         for(int i=0;i<n;i++)
-         {
-             while(st.size()>0 and st.top().first>=nums[i]) st.pop();
-
-             if(st.size()==0) left[i]=0;
-             else left[i]=st.top().second + 1;
-
-             st.push({nums[i],i});
-         }
-
-
-         int maxi=INT_MIN;
-
-         for(int i=0;i<n;i++)
-         {
-             int lol=nums[i]*(right[i]-left[i]+1);
-
-             maxi=max(maxi,lol);
-         }
-
-
-         return maxi;
     }
 };
