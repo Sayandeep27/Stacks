@@ -16,17 +16,16 @@ public:
                 // Push the current score to the stack
                 st.push(score);
 
-                // Reset the score to 0 for the new inner level
+               // Reset the current score to 0: score = 0;. This reset is necessary because we are entering a new level of parentheses.
                 score = 0;
 
             } 
-            else 
+            else   // When encountering a closing parenthesis, we need to calculate the score for the current level.
             {
-                // When encountering a ')', calculate the score
-                // st.top() is the score before the current '()' or nested '()'
-                // max(1, 2 * score) handles both '()' and nested cases:
-                // - For '()', score is 0, so max(1, 0) = 1
-                // - For nested '(A)', score is non-zero, so it is doubled
+                 //st.top() retrieves the score from before the current () or nested ().
+
+                 //max(1, 2 * score) ensures that if score is 0 (i.e., the immediate previous character was (), it counts as 1 (() -> 1).
+                 //If score is non-zero (i.e., we had nested parentheses inside the current level), it doubles the score.
 
                 score = st.top() + max(1, 2 * score);
 
