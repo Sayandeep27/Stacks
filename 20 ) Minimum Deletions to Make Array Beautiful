@@ -1,27 +1,68 @@
+
 class Solution {
 public:
     int minDeletion(vector<int>& nums) {
-      
-        stack<int>st;
-        int n = nums.size();
-        int ans = 0;
-        for(auto it : nums ){
-            if(st.empty()){
-                st.push(it);
-            }
-            else{
-                if(st.top() == it && st.size()%2 != 0 ){
-                    continue;
-                }
-                else{
-                    st.push(it);
+        stack<int> st;  // Stack to keep track of elements forming a beautiful array
+        int n = nums.size();  // Length of the input array
+        int ans = 0;  // Counter for the minimum number of deletions
+        
+        // Iterate through each element in the array
+        for (auto it : nums)
+        {
+            if (st.empty()) 
+            {
+                st.push(it);  // Push the element onto the stack if the stack is empty
+            } 
+            else 
+            {
+                // Check if the top element of the stack is equal to the current element
+                // and the size of the stack is odd (i.e., we are at an even index in 0-indexed array)
+
+                if (st.top() == it && st.size() % 2 != 0)
+                {
+                    continue;  // Skip the current element to avoid equal adjacent elements
+                } 
+                else
+                {
+                    st.push(it);  // Push the current element onto the stack
                 }
             }
         }
         
-        if(st.size()%2 != 0 ){
-            return n - st.size()+1;
+        // If the resulting stack size is odd, we need to delete one more element
+        // to make the length of the stack even
+        if (st.size() % 2 != 0) 
+        {
+            return n - st.size() + 1;  // Adjust the count for deletions
         }
-        return n - st.size();
+        
+        return n - st.size();  // Return the minimum number of deletions required
+    }
+};
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    int minDeletion(vector<int>& nums) {
+      
+         int deletions = 0;  // Counter for the minimum number of deletions
+        int n = nums.size();  // Length of the input array
+
+        // Iterate through the array
+        for (int i = 0; i < n - 1; i++) {
+            // If current index is even and the current element is equal to the next element
+            if ((i - deletions) % 2 == 0 && nums[i] == nums[i + 1]) {
+                deletions++;  // Increment deletions counter
+            }
+        }
+
+        // If the length of the resulting array after deletions is odd, increment deletions counter
+        if ((n - deletions) % 2 != 0) {
+            deletions++;  // Ensure the resulting length is even
+        }
+
+        return deletions;  // Return the total number of deletions needed
+
+
     }
 };
