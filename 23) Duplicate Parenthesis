@@ -1,37 +1,44 @@
-bool duplicateParanthesis(string &str)
-{
-    // Write your code here
-    stack<char>st;
-    
-    for(auto it:str)
+bool duplicateParanthesis(string &str) {
+
+    stack<char> st; // Stack to keep track of characters
+
+    // Iterate through each character in the string
+    for (auto it : str) 
     {
-        if(it==')')
+        if (it == ')') 
         {
-            char top=st.top();
-            st.pop();
-            
-            int cnt=0;  // inside elements
-            
-            
-            while(top!='(')
+            // When we encounter a closing parenthesis ')'
+            char top = st.top(); // Get the top character from the stack
+
+            st.pop(); // Remove the top character from the stack
+
+            int cnt = 0; // Counter to count the number of characters inside the parentheses
+
+            // Check the characters inside the parentheses
+            while (top != '(') 
             {
-                cnt++;
-                top=st.top();
-                st.pop();
+                cnt++; // Increment the counter for each character inside the parentheses
+
+                top = st.top(); // Get the next top character from the stack
+
+                st.pop(); // Remove the top character from the stack
             }
-            
-            
-            if(cnt<1) return 1;
-            
-            
-        }
+
+
+            // If cnt is less than 1, it means there are duplicate parentheses
+            if (cnt < 1) return true; // Return true indicating duplicate parentheses found
+
+
+        } 
         else
         {
+            // If the character is not a closing parenthesis ')', push it onto the stack
             st.push(it);
+
         }
+
     }
-    
-    
+
+    // If no duplicate parentheses are found, return false
     return false;
-    
 }
