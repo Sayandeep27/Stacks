@@ -40,23 +40,25 @@ public:
         
         for(int i=0;i<n;i++)
         {
-            if(check(tokens[i])==true)
+            if(check(tokens[i])==true)  // If tokens[i] is an operator
             {
                 
-                int a=st.top();
+                int a=st.top();  // Pop the second operand
                 st.pop();
-                int b=st.top();
+
+                int b=st.top();   // Pop the first operand
                 st.pop();
-                st.push(operation(b,a,tokens[i])); 
+
+                st.push(operation(b,a,tokens[i]));  // Perform operation and push result to stack
                 
             }
             else
             {
-                st.push(stoi(tokens[i]));
+                st.push(stoi(tokens[i]));   // Convert token to integer and push to stack if it's an operand
             }
         }
 
-        return st.top();  
+        return st.top();   // Return the final result from the stack
 
     }
 };
