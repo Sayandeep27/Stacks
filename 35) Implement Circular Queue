@@ -1,0 +1,139 @@
+#include <iostream>
+using namespace std;
+
+class CircularQueue {
+private:
+    int *arr;       // Array to store queue elements
+    int front;      // Front position of the queue
+    int rear;       // Rear position of the queue
+    int capacity;   // Maximum capacity of the queue
+    int size;       // Current number of elements in the queue
+
+public:
+    // Constructor to initialize the queue
+    CircularQueue(int cap) 
+    {
+        capacity = cap;
+        arr = new int[capacity];
+        front = -1;
+        rear = -1;
+        size = 0;
+    }
+
+    // Destructor to free dynamically allocated memory
+    ~CircularQueue()
+    {
+        delete [] arr;
+    }
+    
+
+    // Function to check if the queue is empty
+    bool isEmpty() 
+    {
+        return size == 0;
+    }
+
+
+    // Function to check if the queue is full
+    bool isFull() 
+    {
+        return size == capacity;
+    }
+
+    // Function to get the current size of the queue
+    int getSize() 
+    {
+        return size;
+    }
+
+    // Function to insert an element at the rear of the queue
+    void enqueue(int val) 
+    {
+        
+        if (isFull()) 
+        {
+            cout << "Queue is full. Cannot enqueue." << endl;
+            return;
+        }
+
+        rear = (rear + 1) % capacity;   // Circular increment of rear index
+        
+        arr[rear] = val;                // Insert the element at rear
+        
+        if (front == -1) 
+        {
+            front = rear;               // Update front if queue was empty
+        }
+        
+        
+        size++;                         // Increment the size of the queue
+        
+        
+        cout << val << " enqueued to the queue." << endl;
+    }
+
+
+
+    // Function to remove an element from the front of the queue
+    void dequeue()
+    {
+        if (isEmpty()) 
+        {
+            cout << "Queue is empty. Cannot dequeue." << endl;
+            return;
+        }
+
+        int removedValue = arr[front];  // Element to be dequeued
+        
+        if (front == rear) 
+        {
+            front = -1;
+            rear = -1;                  // Reset front and rear if queue becomes empty
+        } 
+        else 
+        {
+            front = (front + 1) % capacity; // Circular increment of front index
+        }
+        
+        
+        size--;                         // Decrease the size of the queue
+        
+        cout << removedValue << " dequeued from the queue." << endl;
+    }
+
+    // Function to get the element at the front of the queue without removing it
+    int peek() 
+    {
+        if (isEmpty()) 
+        {
+            cout << "Queue is empty. Cannot peek." << endl;
+            return -1;
+        }
+        
+        
+        return arr[front];
+    }
+};
+
+
+
+int main() {
+    CircularQueue cq(5);    // Create a circular queue of capacity 5
+
+    cq.enqueue(1);
+    cq.enqueue(2);
+    cq.enqueue(3);
+    cq.enqueue(4);
+    cq.enqueue(5);
+    cq.enqueue(6);          // Queue is full, so 6 cannot be enqueued
+
+    cout << "Front element: " << cq.peek() << endl;
+
+    cq.dequeue();
+    cq.dequeue();
+    cq.enqueue(7);
+
+    cout << "Front element after dequeuing: " << cq.peek() << endl;
+
+    return 0;
+}
