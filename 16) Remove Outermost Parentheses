@@ -36,41 +36,44 @@ public:
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 class Solution {
 public:
-    string removeOuterParentheses(string s) {
-       
-         string str="";
-         
-         int n=s.size();
-          
-         stack<char>st;
+    string removeOuterParentheses(string S) {
+        
+        string str = "";  // String to store the result
 
-         for(int i=0;i<n;i++)
-         {
-            if(s[i]=='(')
+        int n = s.size();  // Get the size of the input string
+        
+        stack<char> st;  // Stack to keep track of parentheses
+
+        // Iterate through each character in the string
+        for (int i = 0; i < n; i++) 
+        {
+            if (s[i] == '(') 
             {
-               if(st.size()==0)
-               {
-                   st.push(s[i]);
-               }
-               else
-               {
-                   str+=s[i];
-                   st.push(s[i]);
-               }
-            }
-            else
+                // If the character is '(', check if it is an outer parenthesis
+                if (st.size() == 0) 
+                {
+                    st.push(s[i]);  // Push the outermost '(' onto the stack
+                } 
+                else 
+                {
+                    // If it is not an outer parenthesis, add it to the result string
+                    str += s[i];
+                    st.push(s[i]);  // Push '(' onto the stack
+                }
+            } 
+            else 
             {
-               if(st.size()>0) st.pop();
+                // If the character is ')', pop from the stack
+                if (st.size() > 0) st.pop();
 
-               if(st.size()>0)
-               {
-                   str+=s[i];           
-               }
-              
+                // If the stack is not empty, it means the current ')' is not an outer parenthesis
+                if (st.size() > 0) 
+                {
+                    str += s[i];  // Add it to the result string
+                }
             }
-         } 
+        }
 
-         return str;
-
+        return str;  // Return the result string without outermost parentheses
     }
 };
