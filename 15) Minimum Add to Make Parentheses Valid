@@ -35,28 +35,37 @@ public:
 class Solution {
 public:
     int minAddToMakeValid(string s) {
-        
-        int n=s.size();
 
-        stack<char>st;
-       
-         int cnt=0;
+         int n = s.size();  // Get the size of the string
 
-        for(int i=0;i<n;i++)
+        stack<char> st;  // Stack to store unmatched opening parentheses '('
+
+        int cnt = 0;  // Counter for unmatched closing parentheses ')'
+
+        // Iterate through each character in the string
+        for (int i = 0; i < n; i++) 
         {
-            if(s[i]=='(')
+            if (s[i] == '(') 
             {
-                st.push(s[i]);
-            }
-            else
+                st.push(s[i]);  // Push opening parenthesis onto the stack
+            } 
+            else 
             {
-                 if(st.size()==0) cnt++;
-                 
-                if(st.size()>0) st.pop();
+                if (st.size() == 0) 
+                {
+                    cnt++;  // If stack is empty and a closing parenthesis is encountered, increment count
+                } 
+                else 
+                {
+                    st.pop();  // If stack is not empty, pop the matching opening parenthesis
+                }
             }
         }
 
 
-        return cnt+st.size();
+
+        // The result is the sum of unmatched closing parentheses (cnt) and unmatched opening parentheses (stack size)
+        return cnt + st.size();
+      
     }
 };
