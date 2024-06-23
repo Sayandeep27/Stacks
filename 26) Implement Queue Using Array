@@ -1,75 +1,87 @@
-#include<bits/stdc++.h>
+#include <iostream>
 
 using namespace std;
+
+#define MAX_SIZE 100 // Define the maximum size of the queue
+
 class Queue {
-  int * arr;
-  int start, end, currSize, maxSize;
-  public:
-    Queue() {
-      arr = new int[16];
-      start = -1;
-      end = -1;
-      currSize = 0;
+
+    int arr[MAX_SIZE];
+    int front, rear;
+
+public:
+    Queue() 
+    {
+        front = -1;
+        rear = -1;  // Initialize the queue as empty
     }
 
-  Queue(int maxSize) {
-    ( * this).maxSize = maxSize;
-    arr = new int[maxSize];
-    start = -1;
-    end = -1;
-    currSize = 0;
-  }
-  void push(int newElement) {
-    if (currSize == maxSize) {
-      cout << "Queue is full\nExiting..." << endl;
-      exit(1);
+
+    // Enqueue an element into the queue
+    void enqueue(int x) 
+    {
+        if (rear >= MAX_SIZE - 1) 
+        {
+            cout << "Queue Overflow\n";
+            return;
+        }
+
+        if (front == -1) front = 0;
+
+        arr[++rear] = x;
     }
-    if (end == -1) {
-      start = 0;
-      end = 0;
-    } else
-      end = (end + 1) % maxSize;
-    arr[end] = newElement;
-    cout << "The element pushed is " << newElement << endl;
-    currSize++;
-  }
-  int pop() {
-    if (start == -1) {
-      cout << "Queue Empty\nExiting..." << endl;
+
+
+
+
+    // Dequeue an element from the queue
+    void dequeue() 
+    {
+        if (front == -1 || front > rear) 
+        {
+            cout << "Queue Underflow\n";
+            return;
+        }
+
+        front++;
     }
-    int popped = arr[start];
-    if (currSize == 1) {
-      start = -1;
-      end = -1;
-    } else
-      start = (start + 1) % maxSize;
-    currSize--;
-    return popped;
-  }
-  int top() {
-    if (start == -1) {
-      cout << "Queue is Empty" << endl;
-      exit(1);
+
+
+
+
+    // Get the front element of the queue
+    int peek() 
+    {
+        if (front == -1 || front > rear) 
+        {
+            cout << "Queue is Empty\n";
+            return -1;
+        }
+
+        return arr[front];
     }
-    return arr[start];
-  }
-  int size() {
-    return currSize;
-  }
+
+
+
+    // Check if the queue is empty
+    bool isEmpty() 
+    {
+        return front == -1 || front > rear;
+    }
+
 
 };
 
 int main() {
-  Queue q(6);
-  q.push(4);
-  q.push(14);
-  q.push(24);
-  q.push(34);
-  cout << "The peek of the queue before deleting any element " << q.top() << endl;
-  cout << "The size of the queue before deletion " << q.size() << endl;
-  cout << "The first element to be deleted " << q.pop() << endl;
-  cout << "The peek of the queue after deleting an element " << q.top() << endl;
-  cout << "The size of the queue after deleting an element " << q.size() << endl;
+    Queue queue;
+    queue.enqueue(10);
+    queue.enqueue(20);
+    queue.enqueue(30);
 
-  return 0;
+    cout << "Front element is " << queue.peek() << "\n";
+
+    queue.dequeue();
+
+    cout << "Front element is " << queue.peek() << "\n";
+    return 0;
 }
