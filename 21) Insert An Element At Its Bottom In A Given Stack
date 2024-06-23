@@ -1,32 +1,30 @@
-
-
 void solve(stack<int>&st,int x)
 {
-    // base case
+    // Base case: if stack is empty, push the element x
     
     if(st.size()==0)
     {
         st.push(x);
         return;
     }
-    
-    
-    int temp=st.top();
+     
+     
+     // Recursive case: pop the top element and recursively insert x at the bottom
+    int topelement=st.top();
     st.pop();
     
     
     solve(st,x);
     
-    st.push(temp);
+    st.push(topelement);  // Push the top element back onto the stack
     
 }
 
-
-stack<int> pushAtBottom(stack<int>& st, int x) 
-{
-    
-   solve(st,x);
+    stack<int> insertAtBottom(stack<int> st,int x){
+         
+        solve(st,x);
     
     
-    return st;
-}
+        return st;
+        
+    }
