@@ -4,7 +4,7 @@ using namespace std;
 int postfix_evaluation(string s)
 {
     int n=s.size();
-    stack<int>st;
+    stack<int>st;               // This means evaluate reverse polish notation
     
     
     for(int i=0;i<n;i++)
