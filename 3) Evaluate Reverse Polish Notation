@@ -6,7 +6,7 @@ public:
         {
             return a+b;
         }
-        else if(s=="-")
+        else if(s=="-")                        //  This means evaluate postfix expression
         {
             return a-b;
         }
