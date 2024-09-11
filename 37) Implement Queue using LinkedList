@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+
+class Queue {
+private:
+    Node* front;
+    Node* rear;
+
+public:
+    Queue() {
+        front = nullptr;
+        rear = nullptr;
+    }
+
+    void enqueue(int val) {
+        Node* newNode = new Node(val);
+        if (!rear) {
+            front = rear = newNode;
+        } else {
+            rear->next = newNode;
+            rear = newNode;
+        }
+        cout << val << " added to queue\n";
+    }
+
+    void dequeue() {
+        if (!front) {
+            cout << "Queue underflow\n";
+            return;
+        }
+        Node* temp = front;
+        front = front->next;
+
+        if (!front) {
+            rear = nullptr;
+        }
+
+        cout << temp->data << " removed from queue\n";
+        delete temp;
+    }
+
+    void peek() {
+        if (!front) {
+            cout << "Queue is empty\n";
+            return;
+        }
+        cout << "Front element is: " << front->data << endl;
+    }
+
+    bool isEmpty() {
+        return front == nullptr;
+    }
+};
+
+int main() {
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.peek();
+    q.dequeue();
+    q.peek();
+    return 0;
+}
