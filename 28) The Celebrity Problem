@@ -1,0 +1,29 @@
+ int celebrity(vector<vector<int> >& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        
+        int top=0,down=n-1;
+        
+        while(top<down)
+        {
+            if(mat[top][down]==1) top++;  // top can't be a celebrity
+            else if(mat[down][top]==1) down--; // down can't be a celebrity
+            else 
+            {
+                top++;
+                down--;   // no one can be a celebrity
+            }
+        }
+        
+        
+        if(top>down) return -1;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(i==top or (mat[top][i]==0 and mat[i][top]==1)) continue;
+            else return -1;
+        }
+        
+        
+        return top;  // or bottom, anything
+    }
